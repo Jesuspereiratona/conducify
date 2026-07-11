@@ -61,7 +61,6 @@ webServer.get("/auto", (req, res) => {
         if (!autoEncontrado) return res.status(404).json({})
 
         return res.json({ ...autoEncontrado, conductor: conductores.find((c) => c.nombre === autoEncontrado.nombre_conductor) || null })
-        return res.json(autoEncontrado)
     }
 
     if (iniciopatente) {
@@ -75,9 +74,4 @@ webServer.get("/auto", (req, res) => {
     }
 
     res.status(400).json({ error: 'Debes enviar patente o iniciopatente' })
-})
-
-const PORT = process.env.PORT || 4000
-webServer.listen(PORT, () => {
-    console.log(`El server está corriendo en http://localhost:${PORT}/`)
 })
