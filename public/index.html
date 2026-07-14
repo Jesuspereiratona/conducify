@@ -9,6 +9,8 @@
 </head>
 <body>
     <div class="container py-4">
+
+        <!-- AUTOS Y CONDUCTORES -->
         <div class="card shadow-sm mb-4">
             <div class="card-body">
                 <h1 class="display-6 fw-bold">Conducify</h1>
@@ -51,6 +53,58 @@
                 </div>
             </div>
         </div>
+
+        <!-- GESTIÓN DE PRODUCTOS -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="display-6 fw-bold">Gestión de Productos</h2>
+                <p class="text-muted mb-3">Lista, ordena y agrega productos desde el servidor.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Lista de productos -->
+            <div class="col-lg-7">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="h5 mb-0">Lista de Artículos</h3>
+                            <button class="btn btn-primary" id="btn-productos">LISTA DE ARTÍCULOS</button>
+                        </div>
+                        <div class="d-flex gap-2 mb-3">
+                            <span class="text-muted small align-self-center">Ordenar por:</span>
+                            <button class="btn btn-sm btn-outline-secondary" id="btn-orden-nombre">Nombre</button>
+                            <button class="btn btn-sm btn-outline-secondary" id="btn-orden-precio">Precio</button>
+                        </div>
+                        <div id="estado-productos" class="alert alert-info">Presiona el botón para cargar los productos.</div>
+                        <div id="lista-productos"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario + imagen -->
+            <div class="col-lg-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="h5 mb-3">Agregar Nuevo Producto</h3>
+                        <img src="./assets/img/producto.png" alt="Producto" class="img-fluid rounded mb-3" style="max-height: 180px; object-fit: cover; width: 100%;">
+                        <form id="form-producto">
+                            <div class="mb-2">
+                                <label class="form-label small fw-semibold">Nombre</label>
+                                <input type="text" id="input-nombre" class="form-control" placeholder="Ej: Zapatillas" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">Precio</label>
+                                <input type="number" id="input-precio" class="form-control" placeholder="Ej: 25990" required>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">AGREGAR NUEVO PRODUCTO</button>
+                        </form>
+                        <div id="estado-form" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script src="./assets/js/app.js"></script>

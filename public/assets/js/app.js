@@ -184,17 +184,14 @@ document.getElementById('btn-automoviles').addEventListener('click', () => carga
 document.getElementById('btn-sin-auto').addEventListener('click', () => cargarEndpoint('/conductoressinauto', 'Conductores sin auto', renderTabla))
 document.getElementById('btn-solitos').addEventListener('click', () => cargarEndpoint('/solitos', 'Resumen de solitos', renderSolitos))
 
-document.getElementById('form-auto').addEventListener('submit', async (evento) => {
+ddocument.getElementById('form-auto').addEventListener('submit', async (evento) => {
     evento.preventDefault()
-
     const patente = document.getElementById('patente').value.trim()
-
     if (!patente) {
         setEstado('Ingresa una patente para buscar.', 'warning')
         resultadoAuto.innerHTML = ''
         return
     }
-
     try {
         const auto = await pedirDatos(`/auto?patente=${encodeURIComponent(patente)}`)
         resultadoAuto.innerHTML = renderDetalle(auto)
@@ -203,4 +200,38 @@ document.getElementById('form-auto').addEventListener('submit', async (evento) =
         resultadoAuto.innerHTML = ''
         setEstado(error.message, 'danger')
     }
+})
+
+let productosCache = []
+
+async function cargarProductos() {
+    productosCache = await pedirDatos('/productos')
+    document.getElementById('lista-productos').innerHTML = renderTabla(productosCache, 'productos')
+    document.getElementById('estado-productos').className = 'alert alert-success'
+    document.getElementById('estado-productos').textContent = `${productosCache.length} productos cargados.`
+}
+
+document.getElementById('btn-productos').addEventListener('click', cargarProductos)
+
+document.getElementById('btn-orden-nombre').addEventListener('click', () => {
+    const ordenados = [...productosCache].sort((a, b) => a.nombre.localeCompare(b.nombre))
+    document.getElementById('lista-productos').innerHTML = renderTabla(ordenados, 'productos')
+})
+
+document.getElementById('btn-orden-precio').addEventListener('click', () => {
+    const ordenados = [...productosCache].sort((a, b) => a.precio - b.precio)
+    document.getElementById('lista-productos').innerHTML = renderTabla(ordenados, 'productos')
+})
+
+document.getElementById('form-producto').addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const nombre = document.getElementById('input-nombre').value.trim()
+    const precio = parseInt(document.getElementById('input-precio').value)
+    await fetch('/productos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, precio })
+    })
+    e.target.reset()
+    cargarProductos()
 })
